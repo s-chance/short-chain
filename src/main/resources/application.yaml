@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: short-chain
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: 12345
+    url: jdbc:postgresql://localhost:5432/test?binaryTransfer=false&forceBinary=false&reWriteBatchedInserts=true&serverTimezone=UTC
+
+mybatis-plus:
+  type-aliases-package: org.entropy.shortchain.entity.po
+  configuration:
+    map-underscore-to-camel-case: true
+
+short-link:
+  domain: http://localhost:7001/
+
+server:
+  port: 7001
+
