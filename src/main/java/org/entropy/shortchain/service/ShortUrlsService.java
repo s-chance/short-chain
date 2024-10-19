@@ -119,10 +119,16 @@ public class ShortUrlsService extends ServiceImpl<ShortUrlsMapper, ShortUrls> {
         LambdaQueryWrapper<ShortUrls> wrapper = new LambdaQueryWrapper<ShortUrls>()
                 .eq(ShortUrls::getShortCode, shortCode);
         ShortUrls shortUrls = getOne(wrapper);
-        if (shortUrls != null && shortUrls.getExpireTime().isAfter(OffsetDateTime.now(ZoneOffset.ofHours(8)))) {
-            return shortUrls.getOriginalUrl();
+        if (shortUrls == null) {
+            return "/404";
         }
-        return "/404";
+
+        if (shortUrls.getExpireTime() != null
+                && shortUrls.getExpireTime().isBefore(OffsetDateTime.now().withOffsetSameLocal(ZoneOffset.UTC))) {
+            return "/404";
+        }
+
+        return shortUrls.getOriginalUrl();
     }
 
     public void incrClickCount(String shortCode) {
