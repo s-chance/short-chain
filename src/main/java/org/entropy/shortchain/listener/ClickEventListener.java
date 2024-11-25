@@ -14,7 +14,7 @@ public class ClickEventListener {
     private final ShortUrlsService shortUrlsService;
 
     @Async("clickStatsExecutor")
-    @EventListener
+    @EventListener(ClickShortLinkEvent.class)
     public void onClick(ClickShortLinkEvent event) {
         String shortCode = event.getShortCode();
         shortUrlsService.incrClickCount(shortCode);
